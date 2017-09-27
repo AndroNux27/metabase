@@ -89,7 +89,8 @@ export default class TextPicker extends Component {
 
                 { multi ?
                     <div className="p1 text-small">
-                        You can enter multiple values separated by commas
+                        <i className="fa fa-bell-o" aria-hidden="true"></i>
+                        多个值请使用英文逗号分开,最多支持2000
                     </div>
                     : null }
             </div>

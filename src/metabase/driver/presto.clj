@@ -173,7 +173,8 @@
   Value         (prepare-value [{:keys [value]}] (prepare-value value))
   String        (prepare-value [this] (hx/literal (str/replace this "'" "''")))
   Boolean       (prepare-value [this] (hsql/raw (if this "TRUE" "FALSE")))
-  Date          (prepare-value [this] (hsql/call :from_iso8601_timestamp (hx/literal (u/date->iso-8601 this))))
+  ;;modifiedBy fangyukun, 2017-08-16, change time zone from utc to beijing
+  Date          (prepare-value [this] (hsql/call :date_add (hx/literal :hour) 8 (hsql/call :from_iso8601_timestamp (hx/literal (u/date->iso-8601 this)))))
   Number        (prepare-value [this] this)
   Object        (prepare-value [this] (throw (Exception. (format "Don't know how to prepare value %s %s" (class this) this)))))
 
@@ -229,14 +230,14 @@
     :hour            (hsql/call :date_trunc (hx/literal :hour) expr)
     :hour-of-day     (hsql/call :hour expr)
     :day             (hsql/call :date_trunc (hx/literal :day) expr)
-    ;; Presto is ISO compliant, so we need to offset Monday = 1 to Sunday = 1
-    :day-of-week     (hx/+ (hx/mod (hsql/call :day_of_week expr) 7) 1)
+    ;; modifiedBy fangyukun, 20170822, change week start date from Sunday to Monday
+    :day-of-week     (hsql/call :day_of_week expr)
     :day-of-month    (hsql/call :day expr)
     :day-of-year     (hsql/call :day_of_year expr)
-    ;; Similar to DoW, sicne Presto is ISO compliant the week starts on Monday, we need to shift that to Sunday
-    :week            (hsql/call :date_add (hx/literal :day) -1 (hsql/call :date_trunc (hx/literal :week) (hsql/call :date_add (hx/literal :day) 1 expr)))
-    ;; Offset by one day forward to "fake" a Sunday starting week
-    :week-of-year    (hsql/call :week (hsql/call :date_add (hx/literal :day) 1 expr))
+    ;; modifiedBy fangyukun, 20170822, change week start date from Sunday to Monday
+    :week            (hsql/call :date_trunc (hx/literal :week) expr)
+    ;; modifiedBy fangyukun, 20170822, change week start date from Sunday to Monday
+    :week-of-year    (hsql/call :week expr)
     :month           (hsql/call :date_trunc (hx/literal :month) expr)
     :month-of-year   (hsql/call :month expr)
     :quarter         (hsql/call :date_trunc (hx/literal :quarter) expr)

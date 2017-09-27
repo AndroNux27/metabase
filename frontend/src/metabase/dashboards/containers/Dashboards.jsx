@@ -145,7 +145,7 @@ export class Dashboards extends Component {
         return (
             <LoadingAndErrorWrapper
                 loading={isLoading}
-                className={cx("relative px4 full-height", {"flex flex-full flex-column": noDashboardsCreated})}
+                className={cx("relative px4 full-height bg-slate-extra-light", {"flex flex-full flex-column": noDashboardsCreated})}
                 noBackground
             >
                 { modalOpen ? this.renderCreateDashboardModal() : null }
@@ -172,9 +172,9 @@ export class Dashboards extends Component {
                 { noDashboardsCreated ?
                     <div className="mt2 flex-full flex align-center justify-center">
                         <EmptyState
-                            message={<span>Put the charts and graphs you look at <br/>frequently in a single, handy place.</span>}
+                            message={<span>将你常用的报表,统计图 <br/>简单的管理起来吧.</span>}
                             image="/app/img/dashboard_illustration"
-                            action="Create a dashboard"
+                            action="创建一个仪表盘"
                             onActionClick={this.showCreateDashboard}
                             className="mt2"
                             imageClassName="mln2"

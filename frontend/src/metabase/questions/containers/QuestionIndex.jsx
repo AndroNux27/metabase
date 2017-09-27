@@ -60,7 +60,7 @@ export const QuestionIndexHeader = ({questions, collections, isAdmin, onSearch})
     const showSetPermissionsLink = isAdmin && hasCollections;
 
     return (<div className="flex align-center pt4 pb2">
-        <TitleAndDescription title={ hasCollections ? "Collections of Questions" : "Saved Questions" }/>
+        <TitleAndDescription title={ hasCollections ? "问题分组" : "已保存的问题" }/>
 
         <div className="flex align-center ml-auto">
             { showSearch &&
@@ -132,7 +132,7 @@ export class QuestionIndex extends Component {
 
                 { showNoSavedQuestionsState && <NoSavedQuestionsState /> }
 
-                { showEverythingElseTitle && <h2 className="mt2 mb2">Everything Else</h2> }
+                { showEverythingElseTitle && <h2 className="mt4 mb2">所有问题</h2> }
 
                 <div className={cx({ "hide": !showEntityList })}>
                     {/* EntityList loads `questions` according to the query specified in the url query string */}

@@ -108,7 +108,7 @@ function formatMajorMinor(major, minor, options = {}) {
     }
 }
 
-/** This formats a time with unit as a date range */
+/** This formats a time with unit as a date range, modifiedBy fangyukun 20170825 */
 export function formatTimeRangeWithUnit(value: Value, unit: DatetimeUnit, options: FormattingOptions = {}) {
     let m = parseTimestamp(value, unit);
     if (!m.isValid()) {
@@ -118,26 +118,29 @@ export function formatTimeRangeWithUnit(value: Value, unit: DatetimeUnit, option
     // Tooltips should show full month name, but condense "MMMM D, YYYY - MMMM D, YYYY" to "MMMM D - D, YYYY" etc
     const monthFormat = options.type === "tooltip" ? "MMMM" : "MMM";
     const condensed = options.type === "tooltip";
+    // use en dashes, for Maz
+    const separator = ` – `;
 
-    const start = m.clone().startOf(unit);
-    const end = m.clone().endOf(unit);
+    const start = m.clone().startOf("isoWeek");
+    const end = m.clone().endOf("isoWeek");
+    //modifiedBy fangyukun at 20170821, change date format
     if (start.isValid() && end.isValid()) {
-        if (!condensed || start.year() !== end.year()) {
-            return start.format(`${monthFormat} D, YYYY`) + RANGE_SEPARATOR + end.format(`${monthFormat} D, YYYY`);
-        } else if (start.month() !== end.month()) {
-            return start.format(`${monthFormat} D`) + RANGE_SEPARATOR + end.format(`${monthFormat} D, YYYY`);
-        } else {
-            return start.format(`${monthFormat} D`) + RANGE_SEPARATOR + end.format(`D, YYYY`);
-        }
+        return start.format(`YYYY/MM/DD`) + separator + end.format(`YYYY/MM/DD`);
     } else {
         return formatWeek(m, options);
     }
+
 }
 
 function formatWeek(m: Moment, options: FormattingOptions = {}) {
-    // force 'en' locale for now since our weeks currently always start on Sundays
-    m = m.locale("en");
-    return formatMajorMinor(m.format("wo"), m.format("gggg"), options);
+    // change locale to china, modifiedBy fangyukun. 20170822
+    m = m.locale("zh-cn", {
+        week: {
+            dow: 1 // Monday is the first day of the week.
+        }
+    });
+    return formatMajorMinor(m.format("WW"), m.format("GGGG"), options);
+
 }
 
 export function formatTimeWithUnit(value: Value, unit: DatetimeUnit, options: FormattingOptions = {}) {
@@ -148,7 +151,7 @@ export function formatTimeWithUnit(value: Value, unit: DatetimeUnit, options: Fo
 
     switch (unit) {
         case "hour": // 12 AM - January 1, 2015
-            return formatMajorMinor(m.format("h A"), m.format("MMMM D, YYYY"), options);
+            return formatMajorMinor(m.format("h A"), m.format("YYYY/MM/DD"), options);
         case "day": // January 1, 2015
             return m.format("MMMM D, YYYY");
         case "week": // 1st - 2015
@@ -159,19 +162,19 @@ export function formatTimeWithUnit(value: Value, unit: DatetimeUnit, options: Fo
                 // table cells show range like "Jan 1, 2017 - Jan 7, 2017"
                 return formatTimeRangeWithUnit(value, unit, options);
             } else if (options.type === "axis") {
-                // axis ticks show start of the week as "Jan 1"
-                return m.clone().startOf(unit).format(`MMM D`);
+                //modifiedBy: fangyukun, 20170822 change format from "Jan 1" to "2017/01/01" and start axix on first day of the week.
+                return m.clone().add(6, "day").startOf("isoWeek").format(`YYYY/MM/DD`);
             } else {
                 return formatWeek(m, options);
             }
-        case "month": // January 2015
+        case "month": //modifiedBy fangyukun at 20170825, change format to "2015/01"
             return options.jsx ?
                 <div><span className="text-bold">{m.format("MMMM")}</span> {m.format("YYYY")}</div> :
-                m.format("MMMM") + " " + m.format("YYYY");
+                m.format("YYYY/MM");
         case "year": // 2015
             return m.format("YYYY");
-        case "quarter": // Q1 - 2015
-            return formatMajorMinor(m.format("[Q]Q"), m.format("YYYY"), { ...options, majorWidth: 0 });
+        case "quarter": // 2015-Q1
+            return formatMajorMinor(m.format("YYYY"), m.format("[Q]Q") , { ...options, majorWidth: 0 });
         case "hour-of-day": // 12 AM
             return moment().hour(value).format("h A");
         case "day-of-week": // Sunday
@@ -187,7 +190,7 @@ export function formatTimeWithUnit(value: Value, unit: DatetimeUnit, options: Fo
         case "quarter-of-year": // January
             return moment().quarter(value).format("[Q]Q");
         default:
-            return m.format("LLLL");
+            return m.format("YYYY/MM/DD");
     }
 }
 
@@ -266,7 +269,7 @@ export function formatValue(value: Value, options: FormattingOptions = {}) {
     } else if (column && column.unit != null) {
         return formatTimeWithUnit(value, column.unit, options);
     } else if (isDate(column) || moment.isDate(value) || moment.isMoment(value) || moment(value, ["YYYY-MM-DD'T'HH:mm:ss.SSSZ"], true).isValid()) {
-        return parseTimestamp(value, column && column.unit).format("LLLL");
+        return parseTimestamp(value, column && column.unit).format("YYYY/MM/DD");
     } else if (typeof value === "string") {
         return formatStringFallback(value, options);
     } else if (typeof value === "number") {

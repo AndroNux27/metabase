@@ -15,6 +15,8 @@ export const COORDINATE = "COORDINATE";
 // other types used for various purporses
 export const ENTITY = "ENTITY";
 export const SUMMABLE = "SUMMABLE";
+//added by fangyukun, 20170914, additional operator type: max,min for datetime and string field
+export const SORTABLE = "SORTABLE";
 export const CATEGORY = "CATEGORY";
 export const DIMENSION = "DIMENSION";
 
@@ -58,6 +60,11 @@ const TYPES = {
         base: [TYPE.Boolean],
         special: [TYPE.Category],
         include: [LOCATION]
+    },
+    //added by fangyukun, 20170914, additional operator type: max,min for datetime and string field
+    [SORTABLE]: {
+        include: [NUMBER, DATE_TIME, STRING],
+        exclude: [ENTITY, LOCATION]
     },
     // NOTE: this is defunct right now.  see definition of isDimension below.
     [DIMENSION]: {
@@ -105,6 +112,9 @@ export const isBoolean = isFieldType.bind(null, BOOLEAN);
 export const isString = isFieldType.bind(null, STRING);
 export const isSummable = isFieldType.bind(null, SUMMABLE);
 export const isCategory = isFieldType.bind(null, CATEGORY);
+
+//added by fangyukun, 20170914, additional operator type: max,min for datetime and string field
+export const isSortable = isFieldType.bind(null, SORTABLE);
 
 export const isDimension = (col) => (col && col.source !== "aggregation");
 export const isMetric    = (col) => (col && col.source !== "breakout") && isSummable(col);
@@ -363,6 +373,11 @@ function summableFields(fields) {
     return _.filter(fields, isSummable);
 }
 
+//add by fangyukun, 20170905
+function sortableFields(fields){
+    return _.filter(fields, isSortable);
+}
+
 function dimensionFields(fields) {
     return _.filter(fields, isDimension);
 }
@@ -375,66 +390,66 @@ var Aggregators = [{
     requiresField: false,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Count of rows",
+    name: "计数",
     short: "count",
     description: "Total number of rows in the answer.",
     validFieldsFilters: [],
     requiresField: false,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Sum of ...",
+    name: "求和",
     short: "sum",
     description: "Sum of all the values of a column.",
     validFieldsFilters: [summableFields],
     requiresField: true,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Average of ...",
+    name: "平均值",
     short: "avg",
     description: "Average of all the values of a column",
     validFieldsFilters: [summableFields],
     requiresField: true,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Number of distinct values of ...",
+    name: "去重计数",
     short: "distinct",
     description:  "Number of unique values of a column among all the rows in the answer.",
     validFieldsFilters: [allFields],
     requiresField: true,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Cumulative sum of ...",
+    name: "累计求和数",
     short: "cum_sum",
     description: "Additive sum of all the values of a column.\ne.x. total revenue over time.",
     validFieldsFilters: [summableFields],
     requiresField: true,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Cumulative count of rows",
+    name: "累计行数",
     short: "cum_count",
     description: "Additive count of the number of rows.\ne.x. total number of sales over time.",
     validFieldsFilters: [],
     requiresField: false,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Standard deviation of ...",
+    name: "标准差",
     short: "stddev",
     description: "Number which expresses how much the values of a column vary among all rows in the answer.",
     validFieldsFilters: [summableFields],
     requiresField: true,
     requiredDriverFeature: "standard-deviation-aggregations"
 }, {
-    name: "Minimum of ...",
+    name: "最小值",
     short: "min",
     description: "Minimum value of a column",
-    validFieldsFilters: [summableFields],
+    validFieldsFilters: [sortableFields],
     requiresField: true,
     requiredDriverFeature: "basic-aggregations"
 }, {
-    name: "Maximum of ...",
+    name: "最大值",
     short: "max",
     description: "Maximum value of a column",
-    validFieldsFilters: [summableFields],
+    validFieldsFilters: [sortableFields],
     requiresField: true,
     requiredDriverFeature: "basic-aggregations"
 }];

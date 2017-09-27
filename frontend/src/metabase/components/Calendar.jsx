@@ -85,7 +85,7 @@ export default class Calendar extends Component {
                 }
                 <span className="flex-full" />
                 <h4 className="cursor-pointer rounded p1">
-                    {current.format("MMMM YYYY")}
+                    {current.format("YYYY/MM")}
                 </h4>
                 <span className="flex-full" />
                 { side !=="left" &&

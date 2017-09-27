@@ -15,6 +15,10 @@ import App from "metabase/App.jsx";
 // auth containers
 import ForgotPasswordApp from "metabase/auth/containers/ForgotPasswordApp.jsx";
 import LoginApp from "metabase/auth/containers/LoginApp.jsx";
+
+//modifiedBy fangyukun,20170905, add ucenter login app
+import UcenterLoginApp from "metabase/auth/containers/UcenterLoginApp.jsx"
+
 import LogoutApp from "metabase/auth/containers/LogoutApp.jsx";
 import PasswordResetApp from "metabase/auth/containers/PasswordResetApp.jsx";
 import GoogleNoAccount from "metabase/auth/components/GoogleNoAccount.jsx";
@@ -175,6 +179,7 @@ export const getRoutes = (store) =>
                 <IndexRedirect to="/auth/login" />
                 <Route component={IsNotAuthenticated}>
                     <Route path="login" title="Login" component={LoginApp} />
+                    <Route path="login/:loginInfo" title="Ucenter Login" component={UcenterLoginApp} />
                 </Route>
                 <Route path="logout" component={LogoutApp} />
                 <Route path="forgot_password" component={ForgotPasswordApp} />

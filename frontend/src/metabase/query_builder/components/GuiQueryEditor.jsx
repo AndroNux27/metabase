@@ -138,7 +138,7 @@ export default class GuiQueryEditor extends Component {
             }
 
             if (query.canAddFilter()) {
-                addFilterButton = this.renderAdd((filterList ? null : "Add filters to narrow your answer"), null, "addFilterTarget");
+                addFilterButton = this.renderAdd((filterList ? null : "设置筛选条件"), null, "addFilterTarget");
             }
         } else {
             enabled = false;
@@ -277,7 +277,7 @@ export default class GuiQueryEditor extends Component {
         const tableMetadata = query.tableMetadata();
         return (
             <div className={"GuiBuilder-section GuiBuilder-data flex align-center arrow-right"}>
-                <span className="GuiBuilder-section-label Query-label">Data</span>
+                <span className="GuiBuilder-section-label Query-label">数据源</span>
                 { this.props.features.data ?
                     <DataSelector
                         ref="dataSection"
@@ -305,7 +305,7 @@ export default class GuiQueryEditor extends Component {
 
         return (
             <div className="GuiBuilder-section GuiBuilder-filtered-by flex align-center" ref="filterSection">
-                <span className="GuiBuilder-section-label Query-label">Filtered by</span>
+                <span className="GuiBuilder-section-label Query-label">筛选条件</span>
                 {this.renderFilters()}
             </div>
         );
@@ -319,7 +319,7 @@ export default class GuiQueryEditor extends Component {
 
         return (
             <div className="GuiBuilder-section GuiBuilder-view flex align-center px1 pr2" ref="viewSection">
-                <span className="GuiBuilder-section-label Query-label">View</span>
+                <span className="GuiBuilder-section-label Query-label">聚合</span>
                 {this.renderAggregation()}
             </div>
         );
@@ -333,7 +333,7 @@ export default class GuiQueryEditor extends Component {
 
         return (
             <div className="GuiBuilder-section GuiBuilder-groupedBy flex align-center px1" ref="viewSection">
-                <span className="GuiBuilder-section-label Query-label">Grouped By</span>
+                <span className="GuiBuilder-section-label Query-label">分组汇总</span>
                 {this.renderBreakouts()}
             </div>
         );

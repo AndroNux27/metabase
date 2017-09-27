@@ -126,20 +126,22 @@ export default class Navbar extends Component {
                         </Link>
                     </li>
                     <li className="pl3 hide xs-show">
-                        <MainNavLink to="/dashboards" name="Dashboards" eventName="Dashboards" />
+                        <MainNavLink to="/dashboards" name="仪表盘" eventName="Dashboards" />
                     </li>
                     <li className="pl1 hide xs-show">
-                        <MainNavLink to="/questions" name="Questions" eventName="Questions" />
+                        <MainNavLink to="/questions" name="问题组" eventName="Questions" />
                     </li>
+                    {/* modifiedby fangyukun, cancel temporarily for no pulse. 20170915
+                        <li className="pl1 hide sm-show">
+                            <MainNavLink to="/pulse" name="Pulses" eventName="Pulses" />
+                        </li>
+                    */}
                     <li className="pl1 hide sm-show">
-                        <MainNavLink to="/pulse" name="Pulses" eventName="Pulses" />
-                    </li>
-                    <li className="pl1 hide sm-show">
-                        <MainNavLink to="/reference/guide" name="Data Reference" eventName="DataReference" />
+                        <MainNavLink to="/reference/guide" name="数据源" eventName="DataReference" />
                     </li>
                     <li className="pl3 hide sm-show">
-                        <Link to={Urls.newQuestion()} data-metabase-event={"Navbar;New Question"} style={BUTTON_PADDING_STYLES.newQuestion} className="NavNewQuestion rounded inline-block bg-white text-brand text-bold cursor-pointer px2 no-decoration transition-all">
-                            New <span>Question</span>
+                        <Link to={Urls.question()} data-metabase-event={"Navbar;New Question"} style={BUTTON_PADDING_STYLES.newQuestion} className="NavNewQuestion rounded inline-block bg-white text-brand text-bold cursor-pointer px2 no-decoration transition-all">
+                            开始 <span>查询</span>
                         </Link>
                     </li>
                     <li className="flex-align-right transition-background">

@@ -86,14 +86,14 @@ export default class SpecificDatePicker extends Component {
                 <div className="flex align-center mb1">
                     <div className={cx('border-top border-bottom full border-left', { 'border-right': !calendar })}>
                         <Input
-                            placeholder={moment().format("MM/DD/YYYY")}
+                            placeholder={moment().format("YYYY/MM/DD")}
                             className="borderless full p2 h3"
                             style={{
                                 outline: 'none'
                             }}
-                            value={date ? date.format("MM/DD/YYYY") : ""}
+                            value={date ? date.format("YYYY/MM/DD") : ""}
                             onBlurChange={({ target: { value } }) => {
-                                let date = moment(value, "MM/DD/YYYY");
+                                let date = moment(value, "YYYY/MM/DD");
                                 if (date.isValid()) {
                                     this.onChange(date, hours, minutes)
                                 } else {

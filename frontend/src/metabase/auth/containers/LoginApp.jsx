@@ -100,7 +100,8 @@ export default class LoginApp extends Component {
         let { login, location } = this.props;
         let { credentials } = this.state;
 
-        login(credentials, location.query.redirect);
+        //取消登录功能，强制使用ucenter登录，modifiedBy fangyukun 20170905
+        //login(credentials, location.query.redirect);
     }
 
     render() {
@@ -116,11 +117,13 @@ export default class LoginApp extends Component {
                     <div className="Login-content Grid-cell">
                         <form className="Form-new bg-white bordered rounded shadowed" name="form" onSubmit={(e) => this.formSubmitted(e)} noValidate>
                             <h3 className="Login-header Form-offset">Sign in to Metabase</h3>
+                            <p className="Form-offset">此登录功能已被取消,请使用Ucenter登录,谢谢.</p>
 
+                            {/* modifiedBy fangyukun 20170905， 取消登录功能，强制使用ucenter登录
                             { Settings.ssoEnabled() &&
                                 <div className="mx4 mb4 py3 border-bottom relative">
                                     <SSOLoginButton provider='google' ref="ssoLoginButton"/>
-                                    {/*<div className="g-signin2 ml1 relative z2" id="g-signin2"></div>*/}
+                                    {//<div className="g-signin2 ml1 relative z2" id="g-signin2"></div>}
                                     <div className="mx1 absolute text-centered left right" style={{ bottom: -8 }}>
                                         <span className="text-bold px3 py2 text-grey-3 bg-white">OR</span>
                                     </div>
@@ -130,14 +133,14 @@ export default class LoginApp extends Component {
                             <FormMessage formError={loginError && loginError.data.message ? loginError : null} ></FormMessage>
 
                             <FormField key="username" fieldName="username" formError={loginError}>
-                                <FormLabel title={Settings.ldapEnabled() ? "Username or email address" : "Email address"} fieldName={"username"} formError={loginError} />
-                                <input className="Form-input Form-offset full py1" name="username" placeholder="youlooknicetoday@email.com" type="text" onChange={(e) => this.onChange("username", e.target.value)} autoFocus />
+                                <FormLabel title="用户名" fieldName={"username"} formError={loginError} />
+                                <input className="Form-input Form-offset full py1" name="username" placeholder="请输入UCenter用户名" type="text" onChange={(e) => this.onChange("username", e.target.value + "@ux168.cn")} autoFocus />
                                 <span className="Form-charm"></span>
                             </FormField>
 
                             <FormField key="password" fieldName="password" formError={loginError}>
-                                <FormLabel title={"Password"}  fieldName={"password"} formError={loginError} />
-                                <input className="Form-input Form-offset full py1" name="password" placeholder="Shh..." type="password" onChange={(e) => this.onChange("password", e.target.value)} />
+                                <FormLabel title={"密码"}  fieldName={"password"} formError={loginError} />
+                                <input className="Form-input Form-offset full py1" name="password" placeholder="默认初始密码:123456" type="password" onChange={(e) => this.onChange("password", e.target.value)} />
                                 <span className="Form-charm"></span>
                             </FormField>
 
@@ -149,10 +152,11 @@ export default class LoginApp extends Component {
 
                             <div className="Form-actions p2 Grid Grid--full md-Grid--1of2">
                                 <button className={cx("Button Grid-cell", {'Button--primary': this.state.valid})} disabled={!this.state.valid}>
-                                    Sign in
+                                    登 录
                                 </button>
                                 <Link to={"/auth/forgot_password"+(Utils.validEmail(this.state.credentials.username) ? "?email="+this.state.credentials.username : "")} className="Grid-cell py2 sm-py0 text-grey-3 md-text-right text-centered flex-full link" onClick={(e) => { window.OSX ? window.OSX.resetPassword() : null }}>I seem to have forgotten my password</Link>
                             </div>
+                            */}
                         </form>
                     </div>
                 </div>

@@ -72,6 +72,10 @@
   flex: 0 0 25%;
 }
 
+.Grid--1of5 > .Grid-cell {
+  flex: 0 0 20%;
+}
+
 @media (--breakpoint-min-sm) {
   .small-Grid--fit > .Grid-cell {
     flex: 1;
@@ -87,6 +91,9 @@
   }
   .small-Grid--1of4 > .Grid-cell {
     flex: 0 0 25%;
+  }
+  .md-Grid--1of5 > .Grid-cell {
+    flex: 0 0 20%;
   }
 }
 
@@ -106,6 +113,9 @@
   .md-Grid--1of4 > .Grid-cell {
     flex: 0 0 25%;
   }
+  .md-Grid--1of5 > .Grid-cell {
+    flex: 0 0 20%;
+  }
 }
 
 @media (--breakpoint-min-lg) {
@@ -123,6 +133,9 @@
   }
   .large-Grid--1of4 > .Grid-cell {
     flex: 0 0 25%;
+  }
+  .md-Grid--1of5 > .Grid-cell {
+    flex: 0 0 20%;
   }
 }
 

@@ -10,7 +10,7 @@ const COLLECTION_ICON_SIZE = 64;
 const COLLECTION_BOX_CLASSES = "relative block p4 hover-parent hover--visibility cursor-pointer text-centered transition-background";
 
 const CollectionButtons = ({ collections, isAdmin, push }) =>
-    <ol className="Grid Grid--gutters Grid--fit small-Grid--1of3 md-Grid--1of4 large-Grid--guttersLg">
+    <ol className="Grid Grid--gutters Grid--fit small-Grid--1of3 md-Grid--1of5 large-Grid--guttersLg">
         { collections
             .map(collection => <CollectionButton {...collection} push={push} isAdmin={isAdmin} />)
             .concat(isAdmin ? [<NewCollectionButton push={push} />] : [])
@@ -90,7 +90,7 @@ const NewCollectionButton = ({ push }) =>
                 />
             </div>
         </div>
-        <h3>New collection</h3>
+        <h3>创建一个新组合</h3>
     </div>
 
 export default CollectionButtons;

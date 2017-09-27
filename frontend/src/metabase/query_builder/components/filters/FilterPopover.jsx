@@ -292,7 +292,7 @@ export default class FilterPopover extends Component {
                             className={cx("Button Button--purple full", { "disabled": !this.isValid() })}
                             onClick={() => this.commitFilter(this.state.filter)}
                         >
-                            {!this.props.filter ? "Add filter" : "Update filter"}
+                            {!this.props.filter ? "增加筛选条件" : "确认修改"}
                         </button>
                     </div>
                 </div>

@@ -12,9 +12,9 @@ const QUERY_BUILDER_STEPS = [
         getModal: (props) =>
             <div className="text-centered">
                 <RetinaImage className="mb2" forceOriginalDimensions={false} src="app/assets/img/qb_tutorial/question_builder.png" width={186} />
-                <h3>Welcome to the Query Builder!</h3>
-                <p>The Query Builder lets you assemble questions (or "queries") to ask about your data.</p>
-                <a className="Button Button--primary" onClick={props.onNext}>Tell me more</a>
+                <h3>欢迎来到我们为您精心准备的超简单教程!</h3>
+                <p>这个教程将向您演示如何使用查询功能来查询您想要的数据.我们开始吧！</p>
+                <a className="Button Button--primary" onClick={props.onNext}>朕准了,开始吧</a>
             </div>
     },
     {
@@ -23,8 +23,8 @@ const QUERY_BUILDER_STEPS = [
         getModal: (props) =>
             <div className="text-centered">
                 <RetinaImage id="QB-TutorialTableImg" className="mb2" forceOriginalDimensions={false} src="app/assets/img/qb_tutorial/table.png" width={157} />
-                <h3>Start by picking the table with the data that you have a question about.</h3>
-                <p>Go ahead and select the "Orders" table from the dropdown menu.</p>
+                <h3>第一步: 选择您要查询的数据仓库和数据表</h3>
+                <p>请点击上方的"数据源"区域, 并在弹出的下拉框中选中<strong>"Sample Dataset"</strong>中的<strong>"Orders"</strong>表.</p>
             </div>,
         shouldAllowEvent: (e) => qs(".GuiBuilder-data a").contains(e.target)
     },
@@ -51,8 +51,8 @@ const QUERY_BUILDER_STEPS = [
                     src="app/assets/img/qb_tutorial/funnel.png"
                     width={135}
                 />
-                <h3>Filter your data to get just what you want.</h3>
-                <p>Click the plus button and select the "Created At" field.</p>
+                <h3>第二步: 增加一个筛选条件.</h3>
+                <p>请点击上方"设置筛选条件"区域, 并在弹出的下拉框中选择<strong>"Created At"</strong>字段作为筛选条件.</p>
             </div>,
         shouldAllowEvent: (e) => qs(".GuiBuilder-filtered-by a").contains(e.target)
     },
@@ -63,12 +63,13 @@ const QUERY_BUILDER_STEPS = [
     },
     {
         getPortalTarget: () => qs(".GuiBuilder-filtered-by"),
-        getPageFlagText: () => "Here we can pick how many days we want to see data for, try 10",
+        getPageFlagText: () => "这里可以设置我们要看前x天的数据,试试改成180天",
         getPageFlagTarget: () => qs('[data-ui-tag="relative-date-input"]'),
         shouldAllowEvent: (e) => qs('[data-ui-tag="relative-date-input"]').contains(e.target)
     },
     {
         getPortalTarget: () => qs(".GuiBuilder-filtered-by"),
+        getPageFlagText: () => "再点一下这里",
         getPageFlagTarget: () => qs('[data-ui-tag="add-filter"]'),
         shouldAllowEvent: (e) => qs('[data-ui-tag="add-filter"]').contains(e.target)
     },
@@ -84,15 +85,15 @@ const QUERY_BUILDER_STEPS = [
                     src="app/assets/img/qb_tutorial/calculator.png"
                     width={115}
                 />
-                <h3>Here's where you can choose to add or average your data, count the number of rows in the table, or just view the raw data.</h3>
-                <p>Try it: click on <strong>Raw Data</strong> to change it to <strong>Count of rows</strong> so we can count how many orders there are in this table.</p>
+                <h3>第三步: 这里可以选择你要查询的数据的类型.求和/平均数/最大最小值? 没问题!</h3>
+                <p>试一试: 点击上方的<strong>"Raw Data"</strong>, 在弹出框中选中<strong>"计数"</strong>, 来计算Orders表中所有订单的个数.</p>
             </div>,
         shouldAllowEvent: (e) => qs('.View-section-aggregation').contains(e.target)
     },
     {
         getPortalTarget: () => qs(".Query-section-aggregation"),
-        getPageFlagTarget: () => qsWithContent(".List-item", "Count of rows"),
-        shouldAllowEvent: (e) => qsWithContent(".List-item > a", "Count of rows").contains(e.target)
+        getPageFlagTarget: () => qsWithContent(".List-item", "计数"),
+        shouldAllowEvent: (e) => qsWithContent(".List-item > a", "计数").contains(e.target)
     },
     {
         getPortalTarget: () => qs(".Query-section-breakout"),
@@ -106,15 +107,15 @@ const QUERY_BUILDER_STEPS = [
                     src="app/assets/img/qb_tutorial/banana.png"
                     width={232}
                 />
-                <h3>Add a grouping to break out your results by category, day, month, and more.</h3>
-                <p>Let's do it: click on <strong>Add a grouping</strong>, and choose <strong>Created At: by Week</strong>.</p>
+                <h3>第四步： 使用一个分组来归类你的数据，比如按分类汇总，按时间(日/星期/月)等...</h3>
+                <p>试一试： 点击<strong>Add a grouping</strong>, 并在弹出框内选择<strong>Created At: by Week</strong>.</p>
             </div>,
         shouldAllowEvent: (e) => qs('.Query-section-breakout').contains(e.target)
     },
     {
         getPortalTarget: () => qs(".Query-section-breakout"),
         getPageFlagTarget: () => qs(".FieldList-grouping-trigger"),
-        getPageFlagText: () => "Click on \"by day\" to change it to \"Week.\"",
+        getPageFlagText: () => "点击 \"by day\" 并更换成 \"Week.\"",
         shouldAllowEvent: (e) => qs(".FieldList-grouping-trigger").contains(e.target)
     },
     {
@@ -134,8 +135,8 @@ const QUERY_BUILDER_STEPS = [
                     src="app/assets/img/qb_tutorial/rocket.png"
                     width={217}
                 />
-                <h3>Run Your Query.</h3>
-                <p>You're doing so well! Click <strong>Run query</strong> to get your results!</p>
+                <h3>开始查询: "我感觉我能上天..."</h3>
+                <p>你好棒棒的呢! 查询条件都设好了, 点击按钮 <strong>Get Answer</strong>开始你的查询吧!</p>
             </div>,
         shouldAllowEvent: (e) => qs(".RunButton").contains(e.target)
     },
@@ -151,13 +152,14 @@ const QUERY_BUILDER_STEPS = [
                     src="app/assets/img/qb_tutorial/chart.png"
                     width={160}
                 />
-                <h3>You can view your results as a chart instead of a table.</h3>
-                <p>Everbody likes charts! Click the <strong>Visualization</strong> dropdown and select <strong>Line</strong>.</p>
+                <h3>还可以点击这里更换不同的展示方式来解读你的数据噢!</h3>
+                <p>数据可视化！点击<strong>Visualization</strong>按钮并在下拉框中选择<strong>Line</strong>方式展现数据.</p>
             </div>,
         shouldAllowEvent: (e) => qs(".VisualizationSettings a").contains(e.target)
     },
     {
         getPortalTarget: () => qs(".VisualizationSettings"),
+        getPageFlagText: () => "选择Line, 就是\"折线图\"啦",
         getPageFlagTarget: () => qsWithContent(".ChartType-popover li", "Line"),
         shouldAllowEvent: (e) => qsWithContent(".ChartType-popover li", "Line").contains(e.target)
     },
@@ -171,18 +173,18 @@ const QUERY_BUILDER_STEPS = [
                     id="QB-TutorialBoatImg"
                     src="app/assets/img/qb_tutorial/boat.png" width={190}
                 />
-                <h3>Well done!</h3>
-                <p>That's all! If you still have questions, check out our <a className="link" target="_blank" href="http://www.metabase.com/docs/latest/users-guide/start">User's Guide</a>. Have fun exploring your data!</p>
-                <a className="Button Button--primary" onClick={props.onNext}>Thanks!</a>
+                <h3>棒棒哒!</h3>
+                <p>你已经完成了我们为您精心准备的超简单教程! 现在就开始使用吧!</p>
+                <a className="Button Button--primary" onClick={props.onNext}>谢谢!</a>
             </div>
     },
     {
         getModalTarget: () => qsWithContent(".Header-buttonSection a", "Save"),
         getModal: (props) =>
             <div className="text-centered">
-                <h3>Save Your Questions!</h3>
-                <p>By the way, you can save your questions so you can refer to them later. Saved Questions can also be put into dashboards or Pulses.</p>
-                <a className="Button Button--primary" onClick={props.onClose}>Sounds good</a>
+                <h3>九朵麻袋! 记得保存您的问题!</h3>
+                <p>如果你刚查了一个超复杂的问题, 记得保存下来, 然后下次就可以很快的在仪表盘找到它了，就不用再次输入筛选条件/聚合/分组参数了...</p>
+                <a className="Button Button--primary" onClick={props.onClose}>朕知道了,退下吧</a>
             </div>
     }
 ]
